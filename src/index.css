@@ -1,0 +1,253 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply h-10 w-10;
+  }
+}
+
+.image {
+  position: relative
+}
+
+.image img,
+.image picture,
+.image video {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center
+}
+
+.image.image-contain img,
+.image.image-contain picture,
+.image.image-contain video {
+  -o-object-fit: contain;
+  object-fit: contain
+}
+
+.button.button-circle-small {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0;
+  border-radius: 32px;
+}
+
+.button.button-primary {
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0 20px;
+  font-family: Courier Prime,Courier,monospace;
+  background-color: #003300;
+  color: #ede8e1;
+  font-size: 14px;
+  transition: background-color .2s cubic-bezier(.455,.03,.515,.955);
+}
+
+.button.button-secondary {
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0 20px;
+  font-family: Courier Prime, Courier, monospace;
+  font-size: 14px;
+}
+
+.button.button-pill-secondary {
+  padding: 0 16px;
+  border-radius: 32px;
+  font-size: 14px;
+}
+
+.button.button-pill {
+  height:32px;
+  line-height:32px;
+  padding:0 12px;
+  font-family:Courier Prime,Courier,monospace;
+  color:#2f432b;
+  border:1px solid #c1bab0;
+  border-radius:32px;
+  font-size:14px;
+  transition:background-color .2s cubic-bezier(.455,.03,.515,.955),border-color .2s cubic-bezier(.455,.03,.515,.955),color .2s cubic-bezier(.455,.03,.515,.955)
+}
+.button.button-pill:hover {
+  border-color:#2f432b
+}
+.button.button-pill.active {
+  background:#2f432b;
+  border-color:#2f432b;
+  color:#fff;
+  transition:none
+}
+.button.button-pill.no-hover:hover {
+  border-color:#c1bab0;
+  cursor:auto
+}
+.button.button-pill.no-border {
+  border-color:transparent
+}
+.button.button-pill.button-select {
+  padding-right:30px;
+  text-align:left
+}
+
+.link-filter,
+.link-filter::after {
+  transition: transform .3s cubic-bezier(.86, 0, .07, 1), opacity .3s cubic-bezier(.86, 0, .07, 1), color .3s cubic-bezier(.86, 0, .07, 1);
+}
+
+.link-cover:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0
+}
+
+.theme-day,
+.theme-day .theme-base {
+  background-color: #ede8e1;
+  color: #2f432b;
+  --theme-background-color: #ede8e1;
+  --theme-color: #2f432b
+}
+
+.theme-day .theme-tile {
+  background-color: hsla(35, 12%, 72%, .2);
+  transition: background-color .2s cubic-bezier(.455, .03, .515, .955)
+}
+
+.theme-day .theme-tile.active,
+.theme-day .theme-tile:hover {
+  background-color: hsla(35, 12%, 72%, .1)
+}
+
+.button.button-pill {
+  height: 32px;
+  line-height: 32px;
+  padding: 0 12px;
+  font-family: Courier Prime, Courier, monospace;
+  color: #2f432b;
+  border: 1px solid #c1bab0;
+  border-radius: 32px;
+  font-size: 14px;
+  transition: background-color .2s cubic-bezier(.455, .03, .515, .955), border-color .2s cubic-bezier(.455, .03, .515, .955), color .2s cubic-bezier(.455, .03, .515, .955)
+}
+
+.button.button-pill:hover {
+  border-color: #2f432b
+}
+
+.button.button-pill.active {
+  background: #2f432b;
+  border-color: #2f432b;
+  color: #fff;
+  transition: none
+}
+
+.button.button-pill.no-hover:hover {
+  border-color: #c1bab0;
+  cursor: auto
+}
+
+.button.button-pill.no-border {
+  border-color: transparent
+}
+
+.button.button-pill.button-select {
+  padding-right: 30px;
+  text-align: left
+}
+
+.theme-day .button.button-pill,
+.theme-night .theme-day .button.button-pill {
+  color: #2f432b;
+  border: 1px solid #c1bab0
+}
+
+.theme-day .button.button-pill:hover,
+.theme-night .theme-day .button.button-pill:hover {
+  border-color: #2f432b
+}
+
+.theme-day .button.button-pill.active,
+.theme-night .theme-day .button.button-pill.active {
+  background: #2f432b;
+  border-color: #2f432b;
+  color: #fff
+}
+
+.theme-day .button.button-pill.no-hover:hover,
+.theme-night .theme-day .button.button-pill.no-hover:hover {
+  border-color: #c1bab0
+}
+
+.theme-day .theme-night .button.button-pill,
+.theme-night .button.button-pill {
+  color: #fff;
+  border: 1px solid #4a6245
+}
+
+.theme-day .theme-night .button.button-pill:hover,
+.theme-night .button.button-pill:hover {
+  border-color: #fff
+}
+
+.theme-day .theme-night .button.button-pill.active,
+.theme-night .button.button-pill.active {
+  background: #a57538;
+  border-color: #a57538;
+  color: #fff
+}
+
+.theme-day .theme-night .button.button-pill.no-hover:hover,
+.theme-night .button.button-pill.no-hover:hover {
+  border-color: #4a6245
+}
+
+.button.button-pill.button-pill-white {
+  color: #fff;
+  border-color: #fff
+}
+
+.button.button-pill.button-pill-white.active,
+.button.button-pill.button-pill-white:hover {
+  border-color: #fff
+}
+
+.button.button-pill-height,
+.button.button-pill-secondary {
+  height: 32px;
+  line-height: 32px;
+  border: 1px solid transparent;
+  font-family: Courier Prime, Courier, monospace;
+  color: #2f432b
+}
+
+.button.button-pill-secondary {
+  padding: 0 16px;
+  background-color: #fffaf3;
+  border-radius: 32px;
+  font-size: 14px;
+  transition: background-color .2s cubic-bezier(.455, .03, .515, .955)
+}
+
+.button.button-pill-secondary.active,
+.button.button-pill-secondary:hover {
+  background-color: #fff
+}
