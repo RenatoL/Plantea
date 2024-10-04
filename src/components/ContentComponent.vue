@@ -8,10 +8,11 @@ const products: any = ref([]);
 const isLoading = ref(true)
 
 /* get products */
-onBeforeMount(async () => {
-    products.value = await getAllActiveProducts()
+// onBeforeMount(async () => {
+    products.value = getAllActiveProducts()
     isLoading.value = false
-})
+    console.log("Content comp: products.value is: ", products.value)
+// })
 </script>
 
 <template>
