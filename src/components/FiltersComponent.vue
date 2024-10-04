@@ -66,9 +66,9 @@ function dummy() { }
                         <div class="grid grid-cols-12 gap-y-1 items-center">
                             <div class="hidden xl:block col-span-6"></div>
                             <div class="col-span-12 md:col-span-6 pb-2">
-                                <div class="grid grid-cols-12 gap-y-2 mb-3">
+                                <div class="grid grid-cols-12 gap-y-2 mb-3 font-serif">
                                     <div class="col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-4">
-                                        <h2 class="mb-1">Type</h2>
+                                        <h2 class="mb-1 font-bold">Type</h2>
                                         <ul class="">
                                             <li>
                                                 <button class=" link-filter">Black</button>
@@ -82,7 +82,7 @@ function dummy() { }
                                         </ul>
                                     </div>
                                     <div class="col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-4">
-                                        <h2 class="mb-1">Sort</h2>
+                                        <h2 class="mb-1 font-bold">Sort</h2>
                                         <ul class="">
                                             <li><button class=" link-filter active">Newest</button>
                                             </li>

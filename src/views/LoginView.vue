@@ -51,13 +51,12 @@
     <FooterComponent />
 </template>
 
-<script setup>
-
+<script setup lang="ts">
 import HeaderComponent from '@/components/HeaderComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue';
 import { ref } from "vue"
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth"
-import { firebaseApp, firebaseAuth } from '../firebase.ts'
+import { firebaseAuth } from '../firebase'
 import { useRouter } from "vue-router"
 
 

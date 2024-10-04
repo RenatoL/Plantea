@@ -1,11 +1,12 @@
 <script setup lang="ts">
 
+defineProps(['name', 'description', 'quantity', 'price', 'currency', 'category', 'type', 'mainImage'])
 </script>
 
 <template>
     <div class="col col-span-12 md:col-span-6 flex flex-col items-center justify-center pt3 md:pt-10 pb-8 md:pb-3">
         <div class="px-container-mobile md:px-container-desktop w-full max-w-[550px] relative">
-            <h1 class="font-serif font-200 text-serif-26 md:text-serif-30">Product 1</h1>
+            <h1 class="font-serif font-200 text-serif-26 md:text-serif-30">{{ name }}</h1>
             <p class="font-serif font-200 text-serif-26 md:text-serif-30"><span>50g — </span><span>€10,50</span></p>
             <div class="rich-text mt-4 mb-2">
                 <div class="rich-text rich-text-thin-sans text-sans-16 md:indent-6">

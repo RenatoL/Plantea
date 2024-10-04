@@ -32,3 +32,4 @@ coverage
 # Meta directories
 src/snippets/*
 .env
+.aider*

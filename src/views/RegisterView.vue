@@ -18,16 +18,16 @@
                     <h1 class="font-serif font-thin text-center text-4xl mb-2 lg:text-5xl lg:mb-3">Register</h1>
 
                     <div class="flex flex-col gap-2 mb-2 font-serif font-thin">
-                        <input type="" v-model="firstName"
+                        <input type="text" v-model="firstName"
                             class="block w-full p-4 border-2 focus:outline-none border-plantea-white-smoke-500 placeholder-plantea-white-smoke-500 rounded-2xl bg-plantea-heavy-metal-500"
                             placeholder="First Name">
-                            <input type="" v-model="lastName"
+                            <input type="text" v-model="lastName"
                             class="block w-full p-4 border-2 focus:outline-none border-plantea-white-smoke-500 placeholder-plantea-white-smoke-500 rounded-2xl bg-plantea-heavy-metal-500"
                             placeholder="Last Name">
-                        <input type="" v-model="email"
+                        <input type="email" v-model="email"
                             class="block w-full p-4 border-2 focus:outline-none border-plantea-white-smoke-500 placeholder-plantea-white-smoke-500 rounded-2xl bg-plantea-heavy-metal-500"
                             placeholder="Email">
-                        <input type="" v-model="password"
+                        <input type="password" v-model="password"
                             class="block w-full p-4 border-2 focus:outline-none border-plantea-white-smoke-500 placeholder-plantea-white-smoke-500 rounded-2xl bg-plantea-heavy-metal-500"
                             placeholder="Password">
                         <button @click="register"
@@ -57,8 +57,7 @@
     <FooterComponent />
 </template>
 
-<script setup>
-
+<script setup lang="ts">
 import HeaderComponent from '@/components/HeaderComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue';
 import { ref } from "vue"
@@ -79,7 +78,7 @@ const register = () => {
         })
         .catch((error) => {
             console.log(error.code)
-            alert(error - message)
+            alert(error)
         });
 }
 
