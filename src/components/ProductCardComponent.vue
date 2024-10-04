@@ -3,9 +3,21 @@ import '@/index.css'
 import ProductShortDescriptionComponent from '@/components/ProductShortDescriptionComponent.vue';
 import { useRouter } from 'vue-router'
 import { filename } from 'pathe/utils'
+import { computed } from 'vue'
 
-const props = defineProps(['id', 'refName', 'name', 'description', 'price', 'category', 'type', 'mainImage', 'quantity', 'currency'])
+const props = defineProps(['id', 'refName', 'name', 'description', 'prices', 'category', 'type', 'mainImage', 'quantity'])
 const refName = props.refName
+
+const price = computed(() => {
+    if (props.prices && props.prices.length > 0) {
+        const activePrice = props.prices.find(p => p.priceActive) || props.prices[0];
+        return {
+            amount: activePrice.priceUnitAmount / 100, // Assuming the price is in cents
+            currency: activePrice.priceCurrency
+        };
+    }
+    return { amount: 0, currency: 'EUR' };
+})
 
 const router = useRouter()
 
@@ -31,7 +43,7 @@ const images = Object.fromEntries(
                     </div>
                 </div>
                 <ProductShortDescriptionComponent :key="id" :name="name" :description="description"
-                    :category="category" :type="type" :quantity="quantity" :price="price" :currency="currency" />
+                    :category="category" :type="type" :quantity="quantity" :price="price" />
             </div>
         </div>
     </div>
