@@ -1,7 +1,7 @@
 <template>
-    <HeaderComponent />
-        <button @click="handleSignOut" v-if="isLoggedIn">Logout</button> 
-    <FooterComponent />
+  <HeaderComponent />
+  <button @click="handleSignOut" v-if="isLoggedIn">Logout</button>
+  <FooterComponent />
 </template>
 
 <script setup lang="ts">
@@ -19,23 +19,19 @@ const isLoggedIn = ref(false)
 
 let auth
 onMounted(() => {
-    auth = getAuth()
-    onAuthStateChanged(auth, (user) => {
-        if(user) {
-            isLoggedIn.value = true
-        } else {
-            isLoggedIn.value = false
-        }
-    })
+  auth = getAuth()
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      isLoggedIn.value = true
+    } else {
+      isLoggedIn.value = false
+    }
+  })
 })
 
 const handleSignOut = () => {
-    signOut(auth).then(() => {
-        router.push("/").catch(e => {})
-    })
+  signOut(auth).then(() => {
+    router.push('/').catch((e) => {})
+  })
 }
-
-
 </script>
-
-

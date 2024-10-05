@@ -3,39 +3,61 @@
     <div class="hidden lg:block sticky top-0">
       <div class="image h-[68vh]">
         <picture>
-          <img src="../assets/img/BlackTea_stock_BG.jpg">
+          <img src="../assets/img/BlackTea_stock_BG.jpg" />
         </picture>
       </div>
     </div>
     <div class="pt-18 lg:pt-20 pb-4">
       <div class="px-container-mobile md:px-container-desktop">
         <div class="mx-auto w-full text-plantea-white-smoke-500 text-center p-4 lg:max-w-[440px]">
-          <h1 class="font-serif font-thin text-center text-4xl mb-2 lg:text-5xl lg:mb-3">Checkout</h1>
+          <h1 class="font-serif font-thin text-center text-4xl mb-2 lg:text-5xl lg:mb-3">
+            Checkout
+          </h1>
           <div class="flex flex-col gap-2 mb-2 font-serif font-thin">
-            <StripeElements v-if="stripeLoaded" v-slot="{ elements, instance }" ref="elms" :stripe-key="stripeKey"
-              :instance-options="instanceOptions" :elements-options="elementsOptions">
+            <StripeElements
+              v-if="stripeLoaded"
+              v-slot="{ elements, instance }"
+              ref="elms"
+              :stripe-key="stripeKey"
+              :instance-options="instanceOptions"
+              :elements-options="elementsOptions"
+            >
               <StripeElement
                 class="block w-full p-4 border-2 focus:outline-none border-plantea-white-smoke-500 placeholder-plantea-white-smoke-500 rounded-2xl bg-plantea-heavy-metal-500"
-                ref="card" :elements="elements" :options="cardOptions" />
+                ref="card"
+                :elements="elements"
+                :options="cardOptions"
+              />
             </StripeElements>
-            <button @click="pay"
-              class="block w-full p-4 text-plantea-heavy-metal-500 border-plantea-heavy-metal-500 rounded-md bg-plantea-white-smoke-500">Pay</button>
+            <button
+              @click="pay"
+              class="block w-full p-4 text-plantea-heavy-metal-500 border-plantea-heavy-metal-500 rounded-md bg-plantea-white-smoke-500"
+            >
+              Pay
+            </button>
           </div>
-          <p><button @click="payWithApple" class="p-1">
-              <img class="w-10 aspect-square" src="../assets/img/google-signin-assets/web_neutral_rd_na.png"
-                alt="Apple Pay" aria-label="Apple Logo for Payment">
+          <p>
+            <button @click="payWithApple" class="p-1">
+              <img
+                class="w-10 aspect-square"
+                src="../assets/img/google-signin-assets/web_neutral_rd_na.png"
+                alt="Apple Pay"
+                aria-label="Apple Logo for Payment"
+              />
             </button>
             <button @click="payWithPaypal" class="p-1">
-              <img class="w-10 aspect-square" src="../assets/img/facebook-signin-assets/facebook_2x.png"
-                alt="Paypal Pay" aria-label="Paypal Logo for Payment">
+              <img
+                class="w-10 aspect-square"
+                src="../assets/img/facebook-signin-assets/facebook_2x.png"
+                alt="Paypal Pay"
+                aria-label="Paypal Logo for Payment"
+              />
             </button>
           </p>
-
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -51,8 +73,9 @@ let elementsOptions: any
 let cardOptions: any
 let card: any
 let elms: any
-const stripeKey = ref('pk_test_51OqzcQBl6CWDUv7M32dgN1BWs2Wq5NmXgxRlxdLN7zhXaLBl1I8l8jcOyvO8NwPNMMVSZINCYd0HFKD3epyFsJ2g00laDqpAjM')
-
+const stripeKey = ref(
+  'pk_test_51OqzcQBl6CWDUv7M32dgN1BWs2Wq5NmXgxRlxdLN7zhXaLBl1I8l8jcOyvO8NwPNMMVSZINCYd0HFKD3epyFsJ2g00laDqpAjM'
+)
 
 onBeforeMount(() => {
   stripeLoaded = ref(false)
@@ -70,13 +93,12 @@ onBeforeMount(() => {
   cardOptions = ref({
     // https://stripe.com/docs/stripe.js#element-options
     value: {
-      postalCode: '12345',
-    },
+      postalCode: '12345'
+    }
   })
 
   card = ref()
   elms = ref()
-
 })
 
 const pay = () => {
@@ -90,9 +112,6 @@ const pay = () => {
   })
 }
 
-const payWithApple = () => { }
-const payWithPaypal = () => { }
-
-
-
+const payWithApple = () => {}
+const payWithPaypal = () => {}
 </script>

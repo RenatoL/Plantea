@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app'
+import { getAnalytics } from 'firebase/analytics'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,17 +16,22 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
   appId: import.meta.env.VITE_APPID,
   measurementId: import.meta.env.VITE_MEASUREMENTID
-};
+}
 
 const firebaseApp = initializeApp(firebaseConfig)
 const firebaseAuth = getAuth(firebaseApp)
 const firestore = getFirestore()
 
-const getCurrentUser = () => new Promise ((resolve, reject) => {
-    const unsub = onAuthStateChanged(firebaseAuth, user => {
+const getCurrentUser = () =>
+  new Promise((resolve, reject) => {
+    const unsub = onAuthStateChanged(
+      firebaseAuth,
+      (user) => {
         unsub()
         resolve(user)
-    }, reject)
-})
+      },
+      reject
+    )
+  })
 
 export { firebaseApp, firestore, firebaseAuth, getCurrentUser }

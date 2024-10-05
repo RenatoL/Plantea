@@ -4,32 +4,32 @@ import { getDoc, getDocs, collection, query, where, doc } from 'firebase/firesto
 const productsCollection = collection(firestore, 'products')
 
 interface ProductPrice {
-  priceId: string;
-  priceActive: boolean;
-  priceCurrency: string;
-  priceType: string;
-  priceProductId: string;
-  priceBillingScheme: string;
-  priceDescription: string;
-  priceUnitAmount: number;
+  priceId: string
+  priceActive: boolean
+  priceCurrency: string
+  priceType: string
+  priceProductId: string
+  priceBillingScheme: string
+  priceDescription: string
+  priceUnitAmount: number
 }
 
 interface Product {
-  id: string;
-  name: string;
-  description: string;
-  category: string;
-  type: string;
-  mainImage: string;
-  refName: string;
-  prices: ProductPrice[];
+  id: string
+  name: string
+  description: string
+  category: string
+  type: string
+  mainImage: string
+  refName: string
+  prices: ProductPrice[]
 }
 
 const getProductPrices = async (productId: string): Promise<ProductPrice[]> => {
-  const pricesQuery = collection(productsCollection, productId, 'prices');
-  const pricesSnapshot = await getDocs(pricesQuery);
-  
-  return pricesSnapshot.docs.map(doc => ({
+  const pricesQuery = collection(productsCollection, productId, 'prices')
+  const pricesSnapshot = await getDocs(pricesQuery)
+
+  return pricesSnapshot.docs.map((doc) => ({
     priceId: doc.id,
     priceActive: doc.data().active,
     priceCurrency: doc.data().currency,
@@ -38,17 +38,17 @@ const getProductPrices = async (productId: string): Promise<ProductPrice[]> => {
     priceBillingScheme: doc.data().billing_scheme,
     priceDescription: doc.data().description,
     priceUnitAmount: doc.data().unit_amount
-  }));
-};
+  }))
+}
 
 const getAllActiveProducts = async (): Promise<Product[]> => {
-  const productsQuery = query(productsCollection, where('active', '==', true));
-  const productsSnapshot = await getDocs(productsQuery);
-  
-  const productsPromises = productsSnapshot.docs.map(async doc => {
-    const productData = doc.data();
-    const prices = await getProductPrices(doc.id);
-    
+  const productsQuery = query(productsCollection, where('active', '==', true))
+  const productsSnapshot = await getDocs(productsQuery)
+
+  const productsPromises = productsSnapshot.docs.map(async (doc) => {
+    const productData = doc.data()
+    const prices = await getProductPrices(doc.id)
+
     const product: Product = {
       id: doc.id,
       name: productData.name,
@@ -58,14 +58,14 @@ const getAllActiveProducts = async (): Promise<Product[]> => {
       mainImage: productData.images[0],
       refName: productData.stripe_metadata_refName,
       prices: prices
-    };
-    
-    console.log(product.id, ' => ', product.prices);
-    return product;
-  });
-  
-  return Promise.all(productsPromises);
-};
+    }
+
+    console.log(product.id, ' => ', product.prices)
+    return product
+  })
+
+  return Promise.all(productsPromises)
+}
 
 const getQueriedProductById = async (productId: any) => {
   console.log('Product ID: ' + productId)

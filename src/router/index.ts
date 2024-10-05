@@ -9,7 +9,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: HomeView
     },
     {
       path: '/about',
@@ -17,7 +17,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('@/views/AboutView.vue'),
+      component: () => import('@/views/AboutView.vue')
     },
     {
       path: '/wholesale',
@@ -25,7 +25,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('@/views/WholesaleView.vue'),
+      component: () => import('@/views/WholesaleView.vue')
     },
     {
       path: '/workshops',
@@ -33,7 +33,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('@/views/WorkshopsView.vue'),
+      component: () => import('@/views/WorkshopsView.vue')
     },
     {
       path: '/product/:refName',
@@ -42,7 +42,7 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('@/views/ProductView.vue'),
-      props: true,
+      props: true
     },
     {
       path: '/cart',
@@ -50,7 +50,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('@/views/CartView.vue'),
+      component: () => import('@/views/CartView.vue')
     },
     {
       path: '/checkout',
@@ -61,7 +61,7 @@ const router = createRouter({
       component: () => import('@/views/CheckoutView.vue'),
       meta: {
         guestOnly: false,
-        requiresAuth: true,
+        requiresAuth: true
       }
     },
     {
@@ -72,7 +72,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('@/views/AccountView.vue'),
       meta: {
-        requiresAuth: true,
+        requiresAuth: true
       }
     },
     {
@@ -83,7 +83,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('@/views/LoginView.vue'),
       meta: {
-        guestOnly: true,
+        guestOnly: true
       }
     },
     {
@@ -94,19 +94,19 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('@/views/RegisterView.vue'),
       meta: {
-        guestOnly: true,
+        guestOnly: true
       }
     }
   ]
 })
 
 router.beforeEach(async (to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const isGuestOnly = to.matched.some(record => record.meta.guestOnly)
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+  const isGuestOnly = to.matched.some((record) => record.meta.guestOnly)
 
   const currentUser = await getCurrentUser()
 
-  if(requiresAuth && !currentUser ) {
+  if (requiresAuth && !currentUser) {
     next('/account/login')
   } else if (isGuestOnly && currentUser) {
     next('/account')
