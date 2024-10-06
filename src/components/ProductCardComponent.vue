@@ -46,11 +46,13 @@ const images = Object.fromEntries(
   <div class="col-span-12 md:col-span-6">
     <div @click="productView" class="before:link-cover">
       <div class="theme-tile rounded-2xl lg:rounded-4xl relative overflow-hidden h-full">
-        <div class="p-2 xl:p-6 xl:py-2">
-          <div class="image overflow-hidden w-[75%] aspect-auto">
-            <picture>
-              <img :src="images[`${refName}`]" :alt="name" />
-            </picture>
+        <div class="p-2 xl:p-6 xl:py-2 flex justify-center items-center">
+          <div class="image-container w-full max-w-[300px] aspect-square relative overflow-hidden">
+            <img 
+              :src="images[`${refName}`]" 
+              :alt="name"
+              class="absolute inset-0 w-full h-full object-contain"
+            />
           </div>
         </div>
         <ProductShortDescriptionComponent
