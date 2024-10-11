@@ -52,8 +52,8 @@ const selectQuantity = (selectedQuantity: string) => {
         </div>
       </div>
       <div>
-        <div class="border-y border-solid text-mono-12 font-mono flex items-stretch flex-col xl:flex-row">
-          <div class="flex py-1 xl:pr-1">
+        <div class="border-y border-solid text-mono-12 font-mono flex flex-col">
+          <div class="flex py-1">
             <p class="pt-1 mr-1">Size:</p>
             <div class="relative">
               <select v-model="selectedPrice.priceMetadata.quantity" @change="selectQuantity($event.target.value)" class="w-[105px] left-1/2 block button button-pill">
@@ -63,30 +63,28 @@ const selectQuantity = (selectedQuantity: string) => {
               </select>
             </div>
           </div>
-          <div>
-          <div class="flex py-1 xl:pr-1">                                                                        
-             <p class="pt-1 mr-1">Quantity:</p>                                                                   
-             <div class="relative">                                                                               
-               <span class="w-[105px] left-1/2 block button button-pill no-hover">1</span>                        
-               <button                                                                                            
-                 aria-label="Decrement Quantity"                                                                  
-                 class="button button-pill-height link-opacity-hover absolute top-0 left-0 bottom-0 w-[50%]"      
-               >                                                                                                  
-                 <span class="text-theme-color">-</span>                                                          
-               </button>                                                                                          
-               <button                                                                                            
-                 aria-label="Increment Quantity"                                                                  
-                 class="button button-pill-height link-opacity-hover absolute top-0 right-0 bottom-0 w-[50%]"     
-               >                                                                                                  
-                 <span class="text-theme-color">+</span>                                                          
-               </button>                                                                                          
-             </div>                                                                                               
-           </div>                                                                                                 
-           <div class="flex-grow xl:pl-1 border-solid border-t xl:border-t-0 xl:border-l">                        
-             <div class="py-1 w-full justify-center">                                                             
-               <span class="block button button-pill no-hover w-full">Makes ~ 3-4 cups</span>                     
-             </div>                                                                                               
-           </div> 
+          <div class="border-t border-solid flex items-center justify-between py-1">
+            <div class="flex items-center">
+              <p class="mr-1">Quantity:</p>
+              <div class="relative">
+                <span class="w-[105px] block button button-pill no-hover">1</span>
+                <button
+                  aria-label="Decrement Quantity"
+                  class="button button-pill-height link-opacity-hover absolute top-0 left-0 bottom-0 w-[50%]"
+                >
+                  <span class="text-theme-color">-</span>
+                </button>
+                <button
+                  aria-label="Increment Quantity"
+                  class="button button-pill-height link-opacity-hover absolute top-0 right-0 bottom-0 w-[50%]"
+                >
+                  <span class="text-theme-color">+</span>
+                </button>
+              </div>
+            </div>
+            <div class="flex-grow ml-2">
+              <span class="block button button-pill no-hover w-full">Makes ~3-4 cups</span>
+            </div>
           </div>
         </div>
         <div class="mt-2">
