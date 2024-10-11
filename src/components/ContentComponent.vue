@@ -10,9 +10,7 @@ const isLoading = ref(true)
 onMounted(async () => {
   try {
     products.value = await getAllActiveProducts()
-    console.log("Prices in contentComp: " + products.value[0].prices[0])
     isLoading.value = false
-    console.log('Content comp: products.value is: ', products.value)
   } catch (error) {
     console.error('Error fetching products:', error)
     isLoading.value = false

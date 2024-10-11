@@ -26,4 +26,4 @@ interface Product {
   
   }
 
-  export type { Product }
+  export type { Product, ProductPrice, PriceMetadata }

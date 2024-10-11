@@ -19,17 +19,6 @@ const props = defineProps([
 const refName = props.refName
 const id = props.id
 
-const price = computed(() => {
-  if (props.prices && props.prices.length > 0) {
-    const activePrice = props.prices.find((p) => p.priceActive) || props.prices[0]
-    return {
-      amount: activePrice.priceUnitAmount / 100, // Assuming the price is in cents
-      currency: activePrice.priceCurrency
-    }
-  }
-  return { amount: 0, currency: 'EUR' }
-})
-
 const router = useRouter()
 
 const productView = () => {

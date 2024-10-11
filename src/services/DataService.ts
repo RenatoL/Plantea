@@ -1,29 +1,7 @@
 import { firestore } from '../firebase'
 import { getDoc, getDocs, collection, query, where, doc } from 'firebase/firestore'
-
+import type { Product, ProductPrice, PriceMetadata } from '../types/Product'
 const productsCollection = collection(firestore, 'products')
-
-interface ProductPrice {
-  priceId: string
-  priceActive: boolean
-  priceCurrency: string
-  priceType: string
-  priceProductId: string
-  priceBillingScheme: string
-  priceDescription: string
-  priceUnitAmount: number
-}
-
-interface Product {
-  id: string
-  name: string
-  description: string
-  category: string
-  type: string
-  mainImage: string
-  refName: string
-  prices: ProductPrice[]
-}
 
 const getProductPrices = async (productId: string): Promise<ProductPrice[]> => {
   const pricesQuery = collection(productsCollection, productId, 'prices')
@@ -37,7 +15,8 @@ const getProductPrices = async (productId: string): Promise<ProductPrice[]> => {
     priceProductId: doc.data().product,
     priceBillingScheme: doc.data().billing_scheme,
     priceDescription: doc.data().description,
-    priceUnitAmount: doc.data().unit_amount
+    priceUnitAmount: doc.data().unit_amount,
+    priceMetadata: doc.data().metadata
   }))
 }
 
@@ -53,10 +32,10 @@ const getAllActiveProducts = async (): Promise<Product[]> => {
       id: doc.id,
       name: productData.name,
       description: productData.description,
+      refName: productData.stripe_metadata_refName,
       category: productData.stripe_metadata_cat,
       type: productData.stripe_metadata_type,
       mainImage: productData.images[0],
-      refName: productData.stripe_metadata_refName,
       prices: prices
     }
 
@@ -68,7 +47,6 @@ const getAllActiveProducts = async (): Promise<Product[]> => {
 }
 
 const getQueriedProductById = async (productId: string): Promise<Product | null> => {
-  console.log('Product ID: ' + productId)
   const docRef = doc(firestore, 'products', productId)
   try {
     const docSnapshot = await getDoc(docRef)
@@ -79,10 +57,10 @@ const getQueriedProductById = async (productId: string): Promise<Product | null>
         id: docSnapshot.id,
         name: productData.name,
         description: productData.description,
+        refName: productData.stripe_metadata_refName,
         category: productData.stripe_metadata_cat,
         type: productData.stripe_metadata_type,
         mainImage: productData.images[0],
-        refName: productData.stripe_metadata_refName,
         prices: prices
       }
     } else {

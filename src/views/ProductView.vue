@@ -10,7 +10,7 @@ import { ref, onMounted, onBeforeMount } from 'vue'
 import { filename } from 'pathe/utils'
 
 const props = defineProps([
-  'key',
+  'id',
   'name',
   'description',
   'quantity',
@@ -26,14 +26,18 @@ const isLoading = ref(true)
 
 /* get products */
 onMounted(async () => {
-  console.log('Props key: ' + `${props.key}`)
-  products.value = await getQueriedProductByRefName(`${props.key}`)
+  try {
+  products.value = await getQueriedProductByRefName(`${props.refName}`)
   isLoading.value = false
+  } catch (error) {
+      console.error('Error fetching products:', error)
+      isLoading.value = false
+  }
 })
 
 const glob = import.meta.glob('@/assets/img/products/*.png', { eager: true })
 const images = Object.fromEntries(
-  Object.entries(glob).map(([key, value]) => [filename(key), value.default])
+  Object.entries(glob).map(([id, value]) => [filename(id), value.default])
 )
 </script>
 
@@ -42,17 +46,25 @@ const images = Object.fromEntries(
   <div>
     <div class="px-10 md:px-20 pb-2 md:pb-4 md:pt-4">
       <div class="grid grid-cols-12 gap-2">
-        <ProductCardComponent
-          :name="name"
-          :description="description"
-          :category="category"
-          :type="type"
+        <ProductCardComponent v-for="product in products"
+          :id="product.id"
+          :name="product.name"
+          :refName="product.refName"
+          :description="product.description"
+          :mainImage="product.mainImage"
+          :category="product.category"
+          :type="product.type"
+          :prices="product.prices"
         />
-        <ProductLongDescriptionComponent
-          :name="name"
-          :description="description"
-          :category="category"
-          :type="type"
+        <ProductLongDescriptionComponent v-for="product in products"
+          :id="product.id"
+          :name="product.name"
+          :refName="product.refName"
+          :description="product.description"
+          :mainImage="product.mainImage"
+          :category="product.category"
+          :type="product.type"
+          :prices="product.prices"
         />
       </div>
     </div>

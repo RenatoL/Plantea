@@ -1,14 +1,28 @@
 <script setup lang="ts">
-defineProps([
+import { computed } from 'vue'
+
+const props = defineProps([
   'name',
+  'refName',
   'description',
   'quantity',
-  'price',
+  'prices',
   'currency',
   'category',
   'type',
   'mainImage'
 ])
+
+const price = computed(() => {
+  if (props.prices && props.prices.length > 0) {
+    const activePrice = props.prices.find((p) => p.priceActive) || props.prices[0]
+    return {
+      amount: activePrice.priceUnitAmount / 100, // Assuming the price is in cents
+      currency: activePrice.priceCurrency
+    }
+  }
+  return { amount: 0, currency: 'EUR' }
+})
 </script>
 
 <template>
@@ -18,16 +32,12 @@ defineProps([
     <div class="px-container-mobile md:px-container-desktop w-full max-w-[550px] relative">
       <h1 class="font-serif font-200 text-serif-26 md:text-serif-30">{{ name }}</h1>
       <p class="font-serif font-200 text-serif-26 md:text-serif-30">
-        <span>50g — </span><span>€10,50</span>
+        <span>{{ quantity }} — </span><span>{{ price.amount }}</span>
       </p>
       <div class="rich-text mt-4 mb-2">
         <div class="rich-text rich-text-thin-sans text-sans-16 md:indent-6">
           <p>
-            Beetroot is a root that has a slightly sweet flavor.
-            <br />
-            <br />
-            This vegetable is rich in vitamin C, carotenoids, phenolic compounds and flavonoids,
-            rich in antioxidants.
+            {{ description }}
           </p>
         </div>
       </div>
