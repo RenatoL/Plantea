@@ -53,14 +53,22 @@ const selectQuantity = (selectedQuantity: string) => {
       </div>
       <div>
         <div class="border-y border-solid text-mono-12 font-mono flex flex-col">
-          <div class="flex py-1">
-            <p class="pt-1 mr-1">Size:</p>
-            <div class="relative">
-              <select v-model="selectedPrice.priceMetadata.quantity" @change="selectQuantity($event.target.value)" class="w-[105px] left-1/2 block button button-pill">
-                <option v-for="price in prices" :key="price.priceId" :value="price.priceMetadata.quantity">
-                  {{ price.priceMetadata.quantity }}
-                </option>
-              </select>
+          <div class="flex py-1 items-center">
+            <p class="mr-2">Size:</p>
+            <div class="flex space-x-2">
+              <button
+                v-for="price in prices"
+                :key="price.priceId"
+                @click="selectQuantity(price.priceMetadata.quantity)"
+                :class="[
+                  'button button-pill',
+                  selectedPrice.priceMetadata.quantity === price.priceMetadata.quantity
+                    ? 'bg-theme-color text-white'
+                    : 'bg-white text-theme-color'
+                ]"
+              >
+                {{ price.priceMetadata.quantity }}
+              </button>
             </div>
           </div>
           <div class="border-t border-solid flex items-center justify-between py-1">
