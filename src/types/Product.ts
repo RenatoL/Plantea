@@ -18,12 +18,10 @@ interface Product {
     priceBillingScheme: string
     priceDescription: string
     priceUnitAmount: number
-    priceMetadata: PriceMetadata[]
-  }
-  
-  interface PriceMetadata {
-    [key: string]: boolean;
-  
+    priceMetadata: {
+      quantity: string
+      isDefault: boolean
+    }
   }
 
-  export type { Product, ProductPrice, PriceMetadata }
+  export type { Product, ProductPrice }

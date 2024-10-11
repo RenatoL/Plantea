@@ -3,7 +3,6 @@ import '@/index.css'
 import ProductShortDescriptionComponent from '@/components/ProductShortDescriptionComponent.vue'
 import { useRouter } from 'vue-router'
 import { filename } from 'pathe/utils'
-import { computed } from 'vue'
 
 const props = defineProps([
   'id',

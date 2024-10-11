@@ -16,7 +16,10 @@ const getProductPrices = async (productId: string): Promise<ProductPrice[]> => {
     priceBillingScheme: doc.data().billing_scheme,
     priceDescription: doc.data().description,
     priceUnitAmount: doc.data().unit_amount,
-    priceMetadata: doc.data().metadata
+    priceMetadata: {
+      quantity: doc.data().metadata.quantity,
+      isDefault: doc.data().metadata.isDefault === 'true'
+    }
   }))
 }
 
