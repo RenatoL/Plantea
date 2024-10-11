@@ -67,54 +67,74 @@ const getAllActiveProducts = async (): Promise<Product[]> => {
   return Promise.all(productsPromises)
 }
 
-const getQueriedProductById = async (productId: any) => {
+const getQueriedProductById = async (productId: string): Promise<Product | null> => {
   console.log('Product ID: ' + productId)
   const docRef = doc(firestore, 'products', productId)
   try {
     const docSnapshot = await getDoc(docRef)
     if (docSnapshot.exists()) {
-      return { ...docSnapshot.data(), id: docSnapshot.id }
+      const productData = docSnapshot.data()
+      const prices = await getProductPrices(docSnapshot.id)
+      return {
+        id: docSnapshot.id,
+        name: productData.name,
+        description: productData.description,
+        category: productData.stripe_metadata_cat,
+        type: productData.stripe_metadata_type,
+        mainImage: productData.images[0],
+        refName: productData.stripe_metadata_refName,
+        prices: prices
+      }
     } else {
       console.log('Document does not exist!')
+      return null
     }
   } catch (error) {
-    console.log(error)
+    console.error('Error fetching product:', error)
+    return null
   }
 }
 
-const getQueriedProductByRefName = async (refName: any) => {
+const getQueriedProductByRefName = async (refName: string): Promise<Product[]> => {
   const productsQuery = query(
     productsCollection,
     where('active', '==', true),
-    where('refName', '==', refName)
+    where('stripe_metadata_refName', '==', refName)
   )
 
-  const productsQuerySnap = await getDocs(productsQuery)
+  try {
+    const productsQuerySnap = await getDocs(productsQuery)
 
-  if (productsQuerySnap.empty) {
-    console.log('Product does not exist!')
-  }
-
-  if (productsQuerySnap.size > 1) {
-    console.log('More than 1 active product matching!')
-  }
-
-  const firebaseProducts: any = []
-  productsQuerySnap.forEach((doc) => {
-    console.log(doc.id, ' => ', doc.data())
-
-    const product = {
-      id: doc.id,
-      name: doc.data().name,
-      description: doc.data().description,
-      category: doc.data().stripe_metadata_cat,
-      type: doc.data().stripe_metadata_type,
-      mainImage: doc.data().images[0],
-      refName: doc.data().stripe_metadata_refName
+    if (productsQuerySnap.empty) {
+      console.log('Product does not exist!')
+      return []
     }
-    firebaseProducts.push(product)
-  })
-  return firebaseProducts
+
+    if (productsQuerySnap.size > 1) {
+      console.log('More than 1 active product matching!')
+    }
+
+    const productsPromises = productsQuerySnap.docs.map(async (doc) => {
+      const productData = doc.data()
+      const prices = await getProductPrices(doc.id)
+
+      return {
+        id: doc.id,
+        name: productData.name,
+        description: productData.description,
+        category: productData.stripe_metadata_cat,
+        type: productData.stripe_metadata_type,
+        mainImage: productData.images[0],
+        refName: productData.stripe_metadata_refName,
+        prices: prices
+      }
+    })
+
+    return Promise.all(productsPromises)
+  } catch (error) {
+    console.error('Error fetching products:', error)
+    return []
+  }
 }
 
 export { getAllActiveProducts, getQueriedProductById, getQueriedProductByRefName }
