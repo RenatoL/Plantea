@@ -10,6 +10,7 @@ const isLoading = ref(true)
 onMounted(async () => {
   try {
     products.value = await getAllActiveProducts()
+    console.log("Prices in contentComp: " + products.value[0].prices[0])
     isLoading.value = false
     console.log('Content comp: products.value is: ', products.value)
   } catch (error) {
@@ -26,7 +27,7 @@ onMounted(async () => {
       <div v-else class="grid grid-cols-12 gap-2">
         <ProductCard
           v-for="product in products"
-          :key="product.id"
+          :id="product.id"
           :name="product.name"
           :refName="product.refName"
           :description="product.description"

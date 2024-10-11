@@ -47,7 +47,7 @@ const images = Object.fromEntries(
     <div @click="productView" class="before:link-cover">
       <div class="theme-tile rounded-2xl lg:rounded-4xl relative overflow-hidden h-full">
         <div class="p-2 xl:p-6 xl:py-2 flex justify-center items-center">
-          <div class="image-container w-full max-w-[300px] aspect-square relative overflow-hidden">
+          <div class="image-container w-full max-w-[75%] aspect-square relative overflow-hidden">
             <img 
               :src="images[`${refName}`]" 
               :alt="name"
@@ -62,7 +62,7 @@ const images = Object.fromEntries(
           :category="category"
           :type="type"
           :quantity="quantity"
-          :price="price"
+          :prices="prices"
         />
       </div>
     </div>
