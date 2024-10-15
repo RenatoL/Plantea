@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps([
   'name',
@@ -11,16 +12,18 @@ const props = defineProps([
   'mainImage'
 ])
 
-const price = computed(() => {
-  if (props.prices && props.prices.length > 0) {
-    const activePrice = props.prices.find((p) => p.priceActive) || props.prices[0]
-    return {
-      amount: activePrice.priceUnitAmount / 100, // Assuming the price is in cents
-      currency: activePrice.priceCurrency
-    }
-  }
-  return { amount: 0, currency: 'EUR' }
-})
+const defaultPrice = computed(() => 
+  props.prices.find(price => price.priceMetadata.isDefault) || props.prices[0]
+)
+
+const selectedPrice = ref(defaultPrice.value)
+
+const computedQuantity = computed(() => selectedPrice.value.priceMetadata.quantity)
+
+const price = computed(() => ({
+  amount: selectedPrice.value.priceUnitAmount / 100,
+  currency: selectedPrice.value.priceCurrency
+}))
 </script>
 
 <template>
@@ -30,11 +33,7 @@ const price = computed(() => {
         {{ name }}
       </p>
       <p>
-        <span
-          >{{ quantity }}
-          -
-        </span>
-        {{ price.amount.toFixed(2) }} {{ price.currency }}
+        <span>{{ computedQuantity }} — </span><span>{{ price.amount }} {{ price.currency }}</span>
       </p>
       <div class="flex-row flex-wrap gap-1 mt-2 justify-center flex">
         <span class="block button button-pill no-hover">{{ category }}</span>

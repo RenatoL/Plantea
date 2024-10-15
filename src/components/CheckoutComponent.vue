@@ -62,8 +62,8 @@
 
 <script setup lang="ts">
 import { loadStripe } from '@stripe/stripe-js'
-import { defineComponent, ref, onBeforeMount } from 'vue'
-
+import { ref, onBeforeMount } from 'vue'
+import { useBasketStore } from '@/stores/basketStore'
 import { StripeElements, StripeElement } from 'vue-stripe-js'
 
 let stripeLoaded: any
@@ -76,6 +76,8 @@ let elms: any
 const stripeKey = ref(
   'pk_test_51OqzcQBl6CWDUv7M32dgN1BWs2Wq5NmXgxRlxdLN7zhXaLBl1I8l8jcOyvO8NwPNMMVSZINCYd0HFKD3epyFsJ2g00laDqpAjM'
 )
+
+const basketStore = useBasketStore()
 
 onBeforeMount(() => {
   stripeLoaded = ref(false)
@@ -99,17 +101,37 @@ onBeforeMount(() => {
 
   card = ref()
   elms = ref()
+
 })
 
-const pay = () => {
-  // Get stripe element
-  const cardElement = card.value.stripeElement
-
-  // Access instance methods, e.g. createToken()
-  elms.value.instance.createToken(cardElement).then((result: object) => {
-    // Handle result.error or result.token
-    console.log(result)
-  })
+const pay = async () => {
+// Get stripe element                                                                                                                                                             
+   const cardElement = card.value.stripeElement                                                                                                                                      
+                                                                                                                                                                                     
+   // Create payment method                                                                                                                                                          
+   const { paymentMethod, error } = await elms.value.instance.createPaymentMethod({                                                                                                  
+     type: 'card',                                                                                                                                                                   
+     card: cardElement,                                                                                                                                                              
+   })                                                                                                                                                                                
+                                                                                                                                                                                     
+   if (error) {                                                                                                                                                                      
+     console.error(error)                                                                                                                                                            
+     // Handle error (e.g., show error message to user)                                                                                                                              
+     return                                                                                                                                                                          
+   }                                                                                                                                                                                 
+                                                                                                                                                                                     
+   // Here you would typically send the payment method ID and basket items to your server                                                                                            
+   // Your server would then create a PaymentIntent with Stripe and return the client secret                                                                                         
+   // For this example, we'll just log the payment method and basket items                                                                                                           
+   console.log('Payment Method:', paymentMethod)                                                                                                                                     
+   console.log('Basket Items:', basketStore.items)                                                                                                                                   
+   console.log('Total Amount:', basketStore.totalPrice)                                                                                                                              
+                                                                                                                                                                                     
+   // After successful payment, clear the basket                                                                                                                                     
+   basketStore.clearBasket()                                                                                                                                                         
+                                                                                                                                                                                     
+   // Redirect to a success page or show a success message                                                                                                                           
+   // router.push('/payment-success') 
 }
 
 const payWithApple = () => {}

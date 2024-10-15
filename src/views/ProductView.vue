@@ -65,6 +65,7 @@ const images = Object.fromEntries(
           :category="product.category"
           :type="product.type"
           :prices="product.prices"
+          :product="product"
         />
       </div>
     </div>

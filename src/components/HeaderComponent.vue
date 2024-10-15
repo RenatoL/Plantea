@@ -54,10 +54,10 @@
         </router-link>
 
         <router-link
-          to="/cart"
+          to="/basket"
           class="btn-primary button button-circle-small p-5 m-5"
-          alt="Shopping Cart"
-          aria-label="Shopping Cart"
+          alt="Shopping Basket"
+          aria-label="Shopping Basket"
         >
           <div class="h-full flex justify-center items-center">
             <ShoppingCartIcon />

@@ -1,6 +1,5 @@
 <template>
   <HeaderComponent />
-
   <CheckoutComponent />
   <FooterComponent />
 </template>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useBasketStore } from '@/stores/basketStore'
+import { ref } from 'vue'
 
 const props = defineProps([
   'name',
@@ -10,10 +12,14 @@ const props = defineProps([
   'currency',
   'category',
   'type',
-  'mainImage'
+  'mainImage',
+  'product'
 ])
+                                                                                                                                              
+const basketStore = useBasketStore()  
 
-import { ref } from 'vue'
+
+
 
 const defaultPrice = computed(() => 
   props.prices.find(price => price.priceMetadata.isDefault) || props.prices[0]
@@ -21,7 +27,8 @@ const defaultPrice = computed(() =>
 
 const selectedPrice = ref(defaultPrice.value)
 
-const quantity = computed(() => selectedPrice.value.priceMetadata.quantity)
+const computedQuantity = computed(() => selectedPrice.value.priceMetadata.quantity)
+
 const price = computed(() => ({
   amount: selectedPrice.value.priceUnitAmount / 100,
   currency: selectedPrice.value.priceCurrency
@@ -42,7 +49,7 @@ const selectQuantity = (selectedQuantity: string) => {
     <div class="px-container-mobile md:px-container-desktop w-full max-w-[550px] relative">
       <h1 class="font-serif font-200 text-serif-26 md:text-serif-30">{{ name }}</h1>
       <p class="font-serif font-200 text-serif-26 md:text-serif-30">
-        <span>{{ quantity }} — </span><span>{{ price.amount }} {{ price.currency }}</span>
+        <span>{{ computedQuantity }} — </span><span>{{ price.amount }} {{ price.currency }}</span>
       </p>
       <div class="rich-text mt-4 mb-2">
         <div class="rich-text rich-text-thin-sans text-sans-16 md:indent-6">
@@ -96,7 +103,7 @@ const selectQuantity = (selectedQuantity: string) => {
           </div>
         </div>
         <div class="mt-2">
-          <button class="block w-full button button-primary">Add to Cart</button>
+          <button @click="basketStore.addItem(props.product, selectedPrice)" class="block w-full button button-primary">Add to Cart</button>
         </div>
       </div>
     </div>
