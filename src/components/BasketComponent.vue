@@ -1,56 +1,90 @@
-<script setup lang="ts">                                                                                                                                                            
- import { useBasketStore } from '@/stores/basketStore'                                                                                                                               
- import { useRouter } from 'vue-router'                                                                                                                                              
-                                                                                                                                                                                     
- const basketStore = useBasketStore()                                                                                                                                                
- const router = useRouter()                                                                                                                                                          
-                                                                                                                                                                                     
- const formatPrice = (price: number) => {                                                                                                                                            
-   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price / 100)                                                                                 
- }                                                                                                                                                                                   
-                                                                                                                                                                                     
- const updateQuantity = (productId: string, priceId: string, newQuantity: number) => {                                                                                               
-   if (newQuantity > 0) {                                                                                                                                                            
-     basketStore.updateQuantity(productId, priceId, newQuantity)                                                                                                                     
-   } else {                                                                                                                                                                          
-     basketStore.removeItem(productId, priceId)                                                                                                                                      
-   }                                                                                                                                                                                 
- }                                                                                                                                                                                   
-                                                                                                                                                                                     
- const removeItem = (productId: string, priceId: string) => {                                                                                                                        
-   basketStore.removeItem(productId, priceId)                                                                                                                                        
- }                                                                                                                                                                                   
-                                                                                                                                                                                     
- const proceedToCheckout = () => {                                                                                                                                                   
-   router.push('/checkout')                                                                                                                                                          
- }                                                                                                                                                                                   
- </script>                                                                                                                                                                           
-                                                                                                                                                                                     
-<template>                                                                                                                                                                          
-   <div class="basket">                                                                                                                                                              
-     <h2>Your Basket</h2>                                                                                                                                                            
-     <div v-if="basketStore.items.length === 0">                                                                                                                                     
-       Your basket is empty.                                                                                                                                                         
-     </div>                                                                                                                                                                          
-     <ul v-else>                                                                                                                                                                     
-       <li v-for="item in basketStore.items" :key="`${item.product.id}-${item.selectedPrice.priceId}`">                                                                              
-         <div>                                                                                                                                                                       
-           <h3>{{ item.product.name }}</h3>                                                                                                                                          
-           <p>{{ item.selectedPrice.priceDescription }}</p>                                                                                                                          
-           <p>Quantity: {{ item.quantity }}</p>                                                                                                                                      
-           <p>Price: {{ formatPrice(item.selectedPrice.priceUnitAmount * item.quantity) }}</p>                                                                                       
-         </div>                                                                                                                                                                      
-         <div>                                                                                                                                                                       
-           <button @click="updateQuantity(item.product.id, item.selectedPrice.priceId, item.quantity - 1)">-</button>                                                                
-           <button @click="updateQuantity(item.product.id, item.selectedPrice.priceId, item.quantity + 1)">+</button>                                                                
-           <button @click="removeItem(item.product.id, item.selectedPrice.priceId)">Remove</button>                                                                                  
-         </div>                                                                                                                                                                      
-       </li>                                                                                                                                                                         
-     </ul>                                                                                                                                                                           
-     <div v-if="basketStore.items.length > 0">                                                                                                                                       
-       <p>Total Items: {{ basketStore.totalItems }}</p>                                                                                                                              
-       <p>Total Price: {{ formatPrice(basketStore.totalPrice) }}</p>                                                                                                                 
-       <button @click="proceedToCheckout">Proceed to Checkout</button>                                                                                                               
-     </div>                                                                                                                                                                          
-   </div>                                                                                                                                                                            
- </template>  
+  <script setup lang="ts">                                                                                                                                                                                          
+  import HeaderComponent from '@/components/HeaderComponent.vue'                                                                                                                                                    
+  import FooterComponent from '@/components/FooterComponent.vue'                                                                                                                                                    
+  import { useBasketStore } from '@/stores/basketStore'                                                                                                                                                             
+  import { useRouter } from 'vue-router'                                                                                                                                                                            
+                                                                                                                                                                                                                    
+  const basketStore = useBasketStore()                                                                                                                                                                              
+  const router = useRouter()                                                                                                                                                                                        
+                                                                                                                                                                                                                    
+  const formatPrice = (price: number) => {                                                                                                                                                                          
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price / 100)                                                                                                               
+  }                                                                                                                                                                                                                 
+                                                                                                                                                                                                                    
+  const updateQuantity = (productId: string, priceId: string, newQuantity: number) => {                                                                                                                             
+    if (newQuantity > 0) {                                                                                                                                                                                          
+      basketStore.updateQuantity(productId, priceId, newQuantity)                                                                                                                                                   
+    } else {                                                                                                                                                                                                        
+      basketStore.removeItem(productId, priceId)                                                                                                                                                                    
+    }                                                                                                                                                                                                               
+  }                                                                                                                                                                                                                 
+                                                                                                                                                                                                                    
+  const removeItem = (productId: string, priceId: string) => {                                                                                                                                                      
+    basketStore.removeItem(productId, priceId)                                                                                                                                                                      
+  }                                                                                                                                                                                                                 
+                                                                                                                                                                                                                    
+  const proceedToCheckout = () => {                                                                                                                                                                                 
+    router.push('/checkout')                                                                                                                                                                                        
+  }                                                                                                                                                                                                                 
+  </script>  
+
+<template>                                                                                                                                                                                                                                                                                                                                                                                            
+    <div class="grid grid-cols-1 lg:grid-cols-2 items-start bg-plantea-heavy-metal-500">                                                                                                                            
+      <div class="hidden lg:block sticky top-0">                                                                                                                                                                    
+        <div class="image h-[68vh]">                                                                                                                                                                                
+          <picture>                                                                                                                                                                                                 
+            <img src="../assets/img/BlackTea_stock_BG.jpg" />                                                                                                                                                       
+          </picture>                                                                                                                                                                                                
+        </div>                                                                                                                                                                                                      
+      </div>                                                                                                                                                                                                        
+      <div class="pt-18 lg:pt-20 pb-4">                                                                                                                                                                             
+        <div class="px-container-mobile md:px-container-desktop">                                                                                                                                                   
+          <div class="mx-auto w-full text-plantea-white-smoke-500 text-center p-4 lg:max-w-[440px]">                                                                                                                
+            <h1 class="font-serif font-thin text-center text-4xl mb-2 lg:text-5xl lg:mb-3">                                                                                                                         
+              Your Basket                                                                                                                                                                                           
+            </h1>                                                                                                                                                                                                   
+                                                                                                                                                                                                                    
+            <div v-if="basketStore.items.length === 0" class="font-serif font-thin text-xl mb-4">                                                                                                                   
+              Your basket is empty.                                                                                                                                                                                 
+            </div>                                                                                                                                                                                                  
+                                                                                                                                                                                                                    
+            <div v-else class="flex flex-col gap-4 mb-4">                                                                                                                                                           
+              <div v-for="item in basketStore.items" :key="`${item.product.id}-${item.selectedPrice.priceId}`"                                                                                                      
+                   class="flex flex-col gap-2 p-4 border-2 border-plantea-white-smoke-500 rounded-2xl">                                                                                                             
+                <h3 class="font-serif font-thin text-xl">{{ item.product.name }}</h3>                                                                                                                               
+                <p class="font-serif font-thin">{{ item.selectedPrice.priceDescription }}</p>                                                                                                                       
+                <p class="font-serif font-thin">Price: {{ formatPrice(item.selectedPrice.priceUnitAmount * item.quantity) }}</p>                                                                                    
+                <div class="flex justify-between items-center">                                                                                                                                                     
+                  <button @click="updateQuantity(item.product.id, item.selectedPrice.priceId, item.quantity - 1)"                                                                                                   
+                          class="px-3 py-1 border border-plantea-white-smoke-500 rounded-md">-</button>                                                                                                             
+                  <span class="font-serif font-thin">Quantity: {{ item.quantity }}</span>                                                                                                                           
+                  <button @click="updateQuantity(item.product.id, item.selectedPrice.priceId, item.quantity + 1)"                                                                                                   
+                          class="px-3 py-1 border border-plantea-white-smoke-500 rounded-md">+</button>                                                                                                             
+                </div>                                                                                                                                                                                              
+                <button @click="removeItem(item.product.id, item.selectedPrice.priceId)"                                                                                                                            
+                        class="mt-2 p-2 border border-plantea-white-smoke-500 rounded-md font-serif font-thin">                                                                                                     
+                  Remove                                                                                                                                                                                            
+                </button>                                                                                                                                                                                           
+              </div>                                                                                                                                                                                                
+            </div>                                                                                                                                                                                                  
+                                                                                                                                                                                                                    
+            <div v-if="basketStore.items.length > 0" class="font-serif font-thin mb-4">                                                                                                                             
+              <p class="text-xl mb-2">Total Items: {{ basketStore.totalItems }}</p>                                                                                                                                 
+              <p class="text-xl mb-4">Total Price: {{ formatPrice(basketStore.totalPrice) }}</p>                                                                                                                    
+              <button @click="proceedToCheckout"                                                                                                                                                                    
+                      class="block w-full p-4 text-plantea-heavy-metal-500 border-plantea-heavy-metal-500 rounded-md bg-plantea-white-smoke-500 font-serif font-thin">                                              
+                Proceed to Checkout                                                                                                                                                                                 
+              </button>                                                                                                                                                                                             
+            </div>                                                                                                                                                                                                  
+                                                                                                                                                                                                                    
+            <p class="font-serif subpixel-antialiased">                                                                                                                                                             
+              <router-link to="/" class="underline underline-offset-4 decoration-dotted">                                                                                                                           
+                Continue Shopping                                                                                                                                                                                   
+              </router-link>                                                                                                                                                                                        
+            </p>                                                                                                                                                                                                    
+          </div>                                                                                                                                                                                                    
+        </div>                                                                                                                                                                                                      
+      </div>                                                                                                                                                                                                        
+    </div>                                                                                                                                                                                                          
+  </template>                                                                                                                                                                                                       
+                 
