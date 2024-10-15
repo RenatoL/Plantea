@@ -13,3 +13,10 @@ import BasketComponent from '@/components/BasketComponent.vue';
 
   <FooterComponent />
 </template>
+<template>
+  <BasketComponent />
+</template>
+
+<script setup lang="ts">
+import BasketComponent from '@/components/BasketComponent.vue'
+</script>
